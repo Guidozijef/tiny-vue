@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="./reactive/reactive.js"></script>
+  <script>
+    const data = observe({
+      age: 12,
+      name: 'Sunyanzhe'
+    })
+
+    function renderFunction() {
+      document.querySelector('#app').innerHTML = `我叫${data.name}, 我${data.age}岁，明年${nextYear.value}`
+    }
+
+    const nextYear = computed(() => data.age + 1)
+
+    const renderWatcher = new Watcher(renderFunction)
+
+    watch(
+      () => data.name, 
+      (val, oldVal) => {
+        console.log('new---', val)
+        console.log('old---', oldVal)
+      })
+    setTimeout(() => {
+      data.name = 'yanzhe'
+    }, 1000)
+
+    setTimeout(() => {
+      data.age = 25
+    }, 2000)
+
+  </script>
+</body>
+</html>
